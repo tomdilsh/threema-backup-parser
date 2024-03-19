@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
-import prettify from "html-prettify";
+import * as prettier from "prettier";
 import { renderFile } from "ejs";
 import { OUTPUT_FOLDER } from "./constants.js";
 
@@ -12,8 +12,8 @@ export function renderHTML(input_folder, messageSets) {
   }
 
   messageSets.forEach((set) => {
-    renderFile("templates/main.ejs", { set, style }, {}, (err, str) => {
-      const pretty = prettify(str);
+    renderFile("templates/main.ejs", { set, style }, {}, async (err, str) => {
+      const pretty = await prettier.format(str, { parser: "html" });
       writeFileSync(`${targetFolder}/${set.filename}.html`, pretty);
     });
   });
