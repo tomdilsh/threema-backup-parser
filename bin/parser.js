@@ -1,64 +1,34 @@
-import { readFileSync, writeFileSync, readdirSync } from "fs";
+import { readFileSync, readdirSync } from "fs";
 import { parse } from "csv-parse/sync";
-import { renderFile } from "ejs";
+import {
+  CONTACTS_CSV,
+  CONTACT_MSG_CSV,
+  DISTRIBUTION_LIST_CSV,
+  GROUPS_CSV,
+  ID_FROM_CSV,
+  MESSAGE_TYPES,
+  THREAD_TYPE,
+} from "./constants.js";
+import {
+  getContactAvatar,
+  getDateString,
+  getDisplayName,
+  getFileType,
+  getGroupAvatar,
+} from "./utils.js";
+import { renderHTML } from "./render.js";
 
-// how are first and last name displayed if set?
 // how can we get '2 days ago' style dates?
 // how far back does this day format go?
 // csv fields in various message types?
 // polls?
+// absolute paths to folder?
 // custom command instead of npm ...
 
-const MESSAGE_TYPES = {
-  TEXT: "TEXT",
-  FILE: "FILE",
-  BALLOT: "BALLOT",
-  LOCATION: "LOCATION",
-  VOIP_STATUS: "VOIP_STATUS",
-  GROUP_STATUS: "GROUP_STATUS",
-  GROUP_CALL_STATUS: "GROUP_CALL_STATUS",
-};
-
-const THREAD_TYPE = {
-  CONTACT: "CONTACT",
-  GROUP: "GROUP",
-  DISTRIBUTION: "DISTRIBUTION",
-};
-
-const getDateString = (date) =>
-  date.toLocaleDateString("en-us", {
-    weekday: "long",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-
-const CONTACT_MSG_CSV = /(message_)[\d]+(.csv)/;
-const GROUP_MSG_CSV = /(group_message_)[\d]+(.csv)/;
-const DISTRIBUTION_MSG_CSV = /(distribution_list_message_)[\d]+(.csv)/;
-const ID_FROM_CSV = /\d+(?=\.csv)/;
-const BALLOT_CSV = "ballot.csv";
-const BALLOT_CHOICE_CSV = "ballot_choice.csv";
-const BALLOT_VOTE_CSV = "ballot_vote.csv";
-const CONTACTS_CSV = "contacts.csv";
-const GROUPS_CSV = "groups.csv";
-const DISTRIBUTION_LIST_CSV = "distribution_list.csv";
-const DEFAULT_SENDER = "Me";
-
-function getFileType(file) {
-  if (DISTRIBUTION_MSG_CSV.test(file)) {
-    return THREAD_TYPE.DISTRIBUTION;
-  } else if (GROUP_MSG_CSV.test(file)) {
-    return THREAD_TYPE.GROUP;
-  } else {
-    return THREAD_TYPE.CONTACT;
-  }
-}
-
-function processFolder(input_folder) {
-  const contacts = processContactMetadata(input_folder);
-  const groups = processGroupMetadata(input_folder);
-  const distributions = processDistributionMetadata(input_folder);
+export function processFolder(input_folder) {
+  const contacts = parseContactMetadata(input_folder);
+  const groups = parseGroupMetadata(input_folder);
+  const distributions = parseDistributionMetadata(input_folder);
 
   const messageSets = [];
 
@@ -68,42 +38,19 @@ function processFolder(input_folder) {
       if (Object.keys(messages).length) {
         const id = ID_FROM_CSV.exec(file)[0];
         const type = getFileType(file);
+        const filename = file.replace(".csv", "");
         const set = {
           messages,
+          filename,
           type,
+          id,
         };
-        if (type === THREAD_TYPE.CONTACT) {
-          set.avatar = `contact_avatar_${id}`;
-          set.recipient = contacts[id].nick_name;
-        } else if (type === THREAD_TYPE.GROUP) {
-          set.avatar = `group_avatar_${id}`;
-          set.group_name = groups[id].groupname;
-          set.members = groups[id].members.map(
-            (m) => contacts[m]?.nick_name || DEFAULT_SENDER
-          );
-        } else if (type === THREAD_TYPE.DISTRIBUTION) {
-          set.avatar = `distribution_list_avatar_${id}`;
-          set.distribution_name = distributions[id].distribution_list_name;
-          set.members = distributions[id].distribution_members.map(
-            (m) => contacts[m]?.nick_name || DEFAULT_SENDER
-          );
-        }
+        processThreadType(set, contacts, groups, distributions);
         messageSets.push(set);
       }
     }
   });
-  // return messageSets;
-
-  const style = readFileSync("src/styles/style.css").toString();
-
-  renderFile(
-    "src/templates/main.ejs",
-    { messageSets, style },
-    { rmWhitespace: true },
-    (err, str) => {
-      writeFileSync(`test.html`, str);
-    }
-  );
+  renderHTML(input_folder, messageSets);
 }
 
 function processFile(input_path) {
@@ -120,6 +67,29 @@ function processFile(input_path) {
     processMessage(messages[key]);
   }
   return messages;
+}
+
+function processThreadType(set, contacts, groups, distributions) {
+  switch (set.type) {
+    case THREAD_TYPE.CONTACT:
+      set.avatar = getContactAvatar(set.id);
+      set.recipient = contacts[set.id].nick_name;
+      break;
+    case THREAD_TYPE.GROUP:
+      set.avatar = getGroupAvatar(set.id);
+      set.group_name = groups[set.id].groupname;
+      set.members = groups[set.id].members.map((m) =>
+        getDisplayName(contacts[m])
+      );
+      break;
+    case THREAD_TYPE.DISTRIBUTION:
+      set.avatar = getDistributionAvatar(set.id);
+      set.distribution_name = distributions[set.id].distribution_list_name;
+      set.members = distributions[set.id].distribution_members.map((m) =>
+        getDisplayName(contacts[m])
+      );
+      break;
+  }
 }
 
 function processMessage(entry) {
@@ -146,17 +116,7 @@ function processMessage(entry) {
 function parseFileInfo(body) {
   const cleaned = JSON.parse(body);
   const parsed = parse(cleaned.slice(0, -1).join(","), {
-    columns: [
-      "id",
-      "id2",
-      "type",
-      "size",
-      "filename",
-      null,
-      null,
-      "text",
-      "thumbnail_type",
-    ],
+    columns: [null, null, "type", "size", "filename", null, null, "text", null],
     skip_empty_lines: true,
   })[0];
   parsed["dimensions"] = cleaned.at(-1);
@@ -165,7 +125,7 @@ function parseFileInfo(body) {
 
 function parseLocationInfo(body) {
   const parsed = parse(JSON.parse(body).join(","), {
-    columns: ["latitude", "longitude", "something", "name", "name2"],
+    columns: ["latitude", "longitude", null, "name", null],
     skip_empty_lines: true,
   })[0];
   return parsed;
@@ -173,13 +133,13 @@ function parseLocationInfo(body) {
 
 function parsePollInfo(body) {
   const parsed = parse(JSON.parse(body).join(","), {
-    columns: ["one", "two"],
+    columns: ["?", "??"],
     skip_empty_lines: true,
   })[0];
   return parsed;
 }
 
-function processContactMetadata(folder) {
+function parseContactMetadata(folder) {
   const csv = readFileSync(`${folder}/${CONTACTS_CSV}`);
   const contacts = parse(csv, { columns: true, skip_empty_lines: true }).reduce(
     (obj, item) => {
@@ -192,7 +152,7 @@ function processContactMetadata(folder) {
   return contacts;
 }
 
-function processGroupMetadata(folder) {
+function parseGroupMetadata(folder) {
   const csv = readFileSync(`${folder}/${GROUPS_CSV}`);
   const groups = parse(csv, { columns: true, skip_empty_lines: true }).reduce(
     (obj, item) => {
@@ -207,7 +167,7 @@ function processGroupMetadata(folder) {
   return groups;
 }
 
-function processDistributionMetadata(folder) {
+function parseDistributionMetadata(folder) {
   const csv = readFileSync(`${folder}/${DISTRIBUTION_LIST_CSV}`);
   const distributions = parse(csv, {
     columns: true,
@@ -249,6 +209,3 @@ function processDistributionMetadata(folder) {
 //     return obj;
 //   }, {});
 // }
-
-processFolder("threema-backup");
-// writeFileSync("test.json", JSON.stringify(processFolder("threema-backup")));

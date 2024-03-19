@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>Threema Chat Output - <%= set.filename %></title>
+    <meta name="viewport" , content="width=device-width, initial-scale=1" />
+    <style>
+      <%= style %>
+    </style>
+  </head>
+  <body>
+    <% const messages = Object.values(set.messages) %> 
+    <% for(let i =0; i <messages.length; i++) { %>
+    <div class="message-wrapper">
+      <div class="message">
+        <% if (messages[i].type === 'TEXT') { %>
+        <div><%= messages[i].body %></div>
+        <% } %>
+        <div class="date"><%= messages[i].date %></div>
+      </div>
+    </div>
+    <% } %>
+  </body>
+</html>

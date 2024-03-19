@@ -1,0 +1,28 @@
+export const MESSAGE_TYPES = {
+  TEXT: "TEXT",
+  FILE: "FILE",
+  BALLOT: "BALLOT",
+  LOCATION: "LOCATION",
+  VOIP_STATUS: "VOIP_STATUS",
+  GROUP_STATUS: "GROUP_STATUS",
+  GROUP_CALL_STATUS: "GROUP_CALL_STATUS",
+};
+
+export const THREAD_TYPE = {
+  CONTACT: "CONTACT",
+  GROUP: "GROUP",
+  DISTRIBUTION: "DISTRIBUTION",
+};
+
+export const CONTACT_MSG_CSV = /(message_)[\d]+(.csv)/;
+export const GROUP_MSG_CSV = /(group_message_)[\d]+(.csv)/;
+export const DISTRIBUTION_MSG_CSV = /(distribution_list_message_)[\d]+(.csv)/;
+export const ID_FROM_CSV = /\d+(?=\.csv)/;
+export const BALLOT_CSV = "ballot.csv";
+export const BALLOT_CHOICE_CSV = "ballot_choice.csv";
+export const BALLOT_VOTE_CSV = "ballot_vote.csv";
+export const CONTACTS_CSV = "contacts.csv";
+export const GROUPS_CSV = "groups.csv";
+export const DISTRIBUTION_LIST_CSV = "distribution_list.csv";
+export const DEFAULT_SENDER = "Me";
+export const OUTPUT_FOLDER = "output";
