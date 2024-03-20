@@ -6,7 +6,6 @@
   </head>
   <body>
     <div class="chat-wrapper">
-      <div class="chats">
       <% const messages = Object.values(set.messages) %> 
       <% for(let i =0; i <messages.length; i++) { %>
         <div class="message-wrapper">
@@ -14,11 +13,10 @@
             <% if (messages[i].type === 'TEXT') { %>
             <div><%= messages[i].body %></div>
             <% } %>
-            <div class="date"><%= messages[i].date %></div>
+            <div class="date"><%= messages[i].formatted_date %></div>
           </div>
         </div>
       <% } %>
-      </div>
     </div>
   </body>
 </html>
