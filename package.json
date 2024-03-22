@@ -2,15 +2,10 @@
   "name": "threema-parser-cli",
   "version": "1.0.0",
   "description": "CLI for parsing Threema chat exports into HTML",
-  "main": "index.js",
   "type": "module",
-  "bin": {
-    "threema-html": "./bin/index.js"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^12.0.0",
     "csv-parse": "^5.5.5",
     "ejs": "^3.1.9",
     "prettier": "^3.2.5"

@@ -22,8 +22,6 @@ import { renderHTML } from "./render.js";
 // how far back does this day format go?
 // csv fields in various message types?
 // polls?
-// absolute paths to folder?
-// custom command instead of npm ...
 
 export function processFolder(input_folder) {
   const contacts = parseContactMetadata(input_folder);
