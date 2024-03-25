@@ -31,9 +31,6 @@ body {
   background-attachment: fixed;
 }
 
-.chats {
-}
-
 .message-wrapper {
   width: 100%;
   display: flex;

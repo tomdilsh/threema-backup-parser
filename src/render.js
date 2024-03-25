@@ -17,4 +17,8 @@ export function renderHTML(input_folder, messageSets) {
       writeFileSync(`${targetFolder}/${set.filename}.html`, pretty);
     });
   });
+
+  console.log(
+    `Finished! ${messageSets.length} files were written to "${targetFolder}"`
+  );
 }

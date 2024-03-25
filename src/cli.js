@@ -1,22 +1,30 @@
 import { existsSync } from "fs";
+import { input, select } from "@inquirer/prompts";
 import { processFolder } from "./parser.js";
 
-// options:
-// dark mode?
-// swap sender?
+export async function processOptions(args) {
+  const folder = await input({
+    message: "Please provide a folder containing backup data:",
+  });
 
-export function processCli(args) {
-  if (args.length >= 1) {
-    runParser(args[0]);
-  } else {
-    console.log("Please provide a folder containing backup data");
+  if (!existsSync(folder)) {
+    console.log(`The provided folder does not exist!`);
+    process.exit();
   }
-}
 
-function runParser(folder) {
-  if (existsSync(folder)) {
-    processFolder(folder);
-  } else {
-    console.log(`Folder "${folder}" doesn't exist`);
-  }
+  const colorScheme = await select({
+    message: "Which color scheme would you prefer?",
+    choices: [
+      {
+        name: "Dark",
+        value: "dark",
+      },
+      {
+        name: "Light",
+        value: "light",
+      },
+    ],
+  });
+
+  processFolder(folder, colorScheme);
 }
