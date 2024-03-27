@@ -8,6 +8,16 @@ export const MESSAGE_TYPES = {
   GROUP_CALL_STATUS: "GROUP_CALL_STATUS",
 };
 
+export const FILE_SUBTYPE = {
+  IMAGE: "IMAGE",
+  AUDIO: "AUDIO",
+  VIDEO: "VIDEO",
+  CONTACT: "CONTACT",
+  TEXT: "TEXT",
+  PDF: "PDF",
+  OTHER: "OTHER",
+};
+
 export const THREAD_TYPE = {
   CONTACT: "CONTACT",
   GROUP: "GROUP",

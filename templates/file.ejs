@@ -1,0 +1,9 @@
+<% if (message.file_info.subtype === 'IMAGE') { %>
+  <%- include('image') %>
+<% } else if (message.file_info.subtype === 'VIDEO') { %>
+  <%- include('video') %>
+<% } else if (message.file_info.subtype === 'AUDIO') { %>
+  <%- include('audio') %>
+<% } else { %>
+  <%- include('misc_file') %>
+<% } %>

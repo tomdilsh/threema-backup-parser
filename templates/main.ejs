@@ -11,7 +11,13 @@
         <div class="message-wrapper">
           <div class="message <%= messages[i].isoutbox === '0' ? 'left' : 'right' %>">
             <% if (messages[i].type === 'TEXT') { %>
-            <div><%= messages[i].body %></div>
+              <div><%= messages[i].body %></div>
+            <% } else if (messages[i].type === 'FILE') { %>
+              <%- include('file', { message: messages[i] }) %>
+            <% } else if (messages[i].type === 'BALLOT') { %>
+              <%- include('ballot', { message: messages[i] }) %>
+            <% } else if (messages[i].type === 'LOCATION') { %>
+              <%- include('location', { message: messages[i] }) %>
             <% } %>
             <div class="date"><%= messages[i].formatted_date %></div>
           </div>

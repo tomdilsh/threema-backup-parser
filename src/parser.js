@@ -13,6 +13,7 @@ import {
   getContactAvatar,
   getDateString,
   getDisplayName,
+  getFileSubtype,
   getFileType,
   getGroupAvatar,
 } from "./utils.js";
@@ -114,10 +115,21 @@ function processMessage(entry) {
 function parseFileInfo(body) {
   const cleaned = JSON.parse(body);
   const parsed = parse(cleaned.slice(0, -1).join(","), {
-    columns: [null, null, "type", "size", "filename", null, null, "text", null],
+    columns: [
+      null,
+      null,
+      "mimeType",
+      "size",
+      "filename",
+      "displayable",
+      null,
+      "text",
+      null,
+    ],
     skip_empty_lines: true,
   })[0];
   parsed["dimensions"] = cleaned.at(-1);
+  parsed["subtype"] = getFileSubtype(parsed.mimeType);
   return parsed;
 }
 
