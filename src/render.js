@@ -1,10 +1,11 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
+import { writeFileSync, existsSync, mkdirSync } from "fs";
 import * as prettier from "prettier";
+import { compile } from "sass";
 import { renderFile } from "ejs";
 import { OUTPUT_FOLDER } from "./constants.js";
 
-export function renderHTML(input_folder, messageSets) {
-  const style = readFileSync("styles/style.css").toString();
+export function renderHTML(input_folder, messageSets, colorScheme) {
+  const style = compile(`styles/${colorScheme}.scss`).css;
   const targetFolder = `${input_folder}/${OUTPUT_FOLDER}`;
 
   if (!existsSync(targetFolder)) {

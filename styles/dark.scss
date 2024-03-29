@@ -1,0 +1,31 @@
+@import "_shared";
+
+html {
+  background-color: black;
+}
+
+.chat-wrapper {
+  background-image: url("../../assets/m_wallpaper_dark.png");
+}
+
+.message-wrapper {
+  &.left {
+    .message-bubble {
+      background-color: #666666;
+    }
+  }
+
+  &.right {
+    .message-bubble {
+      background-color: #454945;
+    }
+  }
+}
+
+.message-bubble {
+  color: white;
+}
+
+.date {
+  color: lightgray;
+}

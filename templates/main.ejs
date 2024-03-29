@@ -8,16 +8,19 @@
     <div class="chat-wrapper">
       <% const messages = Object.values(set.messages) %> 
       <% for(let i =0; i <messages.length; i++) { %>
-        <div class="message-wrapper">
-          <div class="message <%= messages[i].isoutbox === '0' ? 'left' : 'right' %>">
+        <% const side = messages[i].isoutbox === '0' ? 'left' : 'right'; %>
+        <div class="message-wrapper <%= side %>">
+          <div class="message-bubble">
             <% if (messages[i].type === 'TEXT') { %>
-              <div><%= messages[i].body %></div>
+              <%- include('text', { message: messages[i] }) %>
             <% } else if (messages[i].type === 'FILE') { %>
               <%- include('file', { message: messages[i] }) %>
             <% } else if (messages[i].type === 'BALLOT') { %>
               <%- include('ballot', { message: messages[i] }) %>
             <% } else if (messages[i].type === 'LOCATION') { %>
               <%- include('location', { message: messages[i] }) %>
+            <% } else { %>
+                <div>Other</div>
             <% } %>
             <div class="date"><%= messages[i].formatted_date %></div>
           </div>

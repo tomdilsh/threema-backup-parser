@@ -24,7 +24,7 @@ import { renderHTML } from "./render.js";
 // csv fields in various message types?
 // polls?
 
-export function processFolder(input_folder) {
+export function processFolder(input_folder, colorScheme) {
   const contacts = parseContactMetadata(input_folder);
   const groups = parseGroupMetadata(input_folder);
   const distributions = parseDistributionMetadata(input_folder);
@@ -49,7 +49,7 @@ export function processFolder(input_folder) {
       }
     }
   });
-  renderHTML(input_folder, messageSets);
+  renderHTML(input_folder, messageSets, colorScheme);
 }
 
 function processFile(input_path) {
