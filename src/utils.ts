@@ -4,13 +4,15 @@ import {
   FILE_SUBTYPE,
   GROUP_MSG_CSV,
   THREAD_TYPE,
-} from "./constants.js";
+} from "./constants";
+import { ContactMetadata } from "./types";
 
-export const getContactAvatar = (id) => `contact_avatar_${id}`;
-export const getGroupAvatar = (id) => `group_avatar_${id}`;
-export const getDistributionAvatar = (id) => `distribution_list_avatar_${id}`;
+export const getContactAvatar = (id: string | number) => `contact_avatar_${id}`;
+export const getGroupAvatar = (id: string | number) => `group_avatar_${id}`;
+export const getDistributionAvatar = (id: string | number) =>
+  `distribution_list_avatar_${id}`;
 
-export const getDisplayName = (contact) => {
+export const getDisplayName = (contact: ContactMetadata) => {
   return (
     `${contact?.firstname} ${contact?.lastname}`.trim() ||
     contact?.nick_name ||
@@ -18,7 +20,7 @@ export const getDisplayName = (contact) => {
   );
 };
 
-export const getDateString = (date) =>
+export const getDateString = (date: Date) =>
   date.toLocaleDateString("en-us", {
     weekday: "long",
     year: "numeric",
@@ -26,7 +28,7 @@ export const getDateString = (date) =>
     day: "numeric",
   });
 
-export const getFileType = (file) => {
+export const getFileType = (file: string) => {
   if (DISTRIBUTION_MSG_CSV.test(file)) {
     return THREAD_TYPE.DISTRIBUTION;
   } else if (GROUP_MSG_CSV.test(file)) {
@@ -36,7 +38,7 @@ export const getFileType = (file) => {
   }
 };
 
-export const getFileSubtype = (mimeType) => {
+export const getFileSubtype = (mimeType: string) => {
   const type = mimeType.split("/")[0];
 
   switch (type) {

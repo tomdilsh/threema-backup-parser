@@ -3,26 +3,27 @@
     <title>Threema Chat Output - <%= set.filename %></title>
     <meta name="viewport" , content="width=device-width, initial-scale=1" />
     <%- '<style>' + style + '</style>'%>
+    <%- '<script>' + script + '</script>' %>
   </head>
   <body>
     <div class="chat-wrapper">
-      <% const messages = Object.values(set.messages) %> 
-      <% for(let i =0; i <messages.length; i++) { %>
-        <% const side = messages[i].isoutbox === '0' ? 'left' : 'right'; %>
-        <div class="message-wrapper <%= side %>">
+      <% const entries = Object.values(set.entries) %> 
+      <% for(let i =0; i <entries.length; i++) { %>
+        <% const side = entries[i].isoutbox ? 'right' : 'left'; %>
+        <div class="entry-wrapper <%= side %>">
           <div class="message-bubble">
-            <% if (messages[i].type === 'TEXT') { %>
-              <%- include('text', { message: messages[i] }) %>
-            <% } else if (messages[i].type === 'FILE') { %>
-              <%- include('file', { message: messages[i] }) %>
-            <% } else if (messages[i].type === 'BALLOT') { %>
-              <%- include('ballot', { message: messages[i] }) %>
-            <% } else if (messages[i].type === 'LOCATION') { %>
-              <%- include('location', { message: messages[i] }) %>
+            <% if (entries[i].type === 'TEXT') { %>
+              <%- include('text', { message: entries[i] }) %>
+            <% } else if (entries[i].type === 'FILE') { %>
+              <%- include('file', { message: entries[i] }) %>
+            <% } else if (entries[i].type === 'BALLOT') { %>
+              <%- include('ballot', { message: entries[i] }) %>
+            <% } else if (entries[i].type === 'LOCATION') { %>
+              <%- include('location', { message: entries[i] }) %>
             <% } else { %>
                 <div>Other</div>
             <% } %>
-            <div class="date"><%= messages[i].formatted_date %></div>
+            <div class="date"></div>
           </div>
         </div>
       <% } %>

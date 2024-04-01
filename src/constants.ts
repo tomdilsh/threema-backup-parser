@@ -1,28 +1,33 @@
-export const MESSAGE_TYPES = {
-  TEXT: "TEXT",
-  FILE: "FILE",
-  BALLOT: "BALLOT",
-  LOCATION: "LOCATION",
-  VOIP_STATUS: "VOIP_STATUS",
-  GROUP_STATUS: "GROUP_STATUS",
-  GROUP_CALL_STATUS: "GROUP_CALL_STATUS",
-};
+export enum COLOR_SCHEME {
+  Dark = "dark",
+  Light = "light",
+}
 
-export const FILE_SUBTYPE = {
-  IMAGE: "IMAGE",
-  AUDIO: "AUDIO",
-  VIDEO: "VIDEO",
-  CONTACT: "CONTACT",
-  TEXT: "TEXT",
-  PDF: "PDF",
-  OTHER: "OTHER",
-};
+export enum THREAD_TYPE {
+  CONTACT = "CONTACT",
+  GROUP = "GROUP",
+  DISTRIBUTION = "DISTRIBUTION",
+}
 
-export const THREAD_TYPE = {
-  CONTACT: "CONTACT",
-  GROUP: "GROUP",
-  DISTRIBUTION: "DISTRIBUTION",
-};
+export enum THREAD_ENTRY_TYPE {
+  TEXT = "TEXT",
+  FILE = "FILE",
+  BALLOT = "BALLOT",
+  LOCATION = "LOCATION",
+  VOIP_STATUS = "VOIP_STATUS",
+  GROUP_STATUS = "GROUP_STATUS",
+  GROUP_CALL_STATUS = "GROUP_CALL_STATUS",
+}
+
+export enum FILE_SUBTYPE {
+  IMAGE = "IMAGE",
+  AUDIO = "AUDIO",
+  VIDEO = "VIDEO",
+  CONTACT = "CONTACT",
+  TEXT = "TEXT",
+  PDF = "PDF",
+  OTHER = "OTHER",
+}
 
 export const CONTACT_MSG_CSV = /(message_)[\d]+(.csv)/;
 export const GROUP_MSG_CSV = /(group_message_)[\d]+(.csv)/;

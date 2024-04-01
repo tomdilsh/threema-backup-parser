@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "CLI for parsing Threema chat exports into HTML",
   "type": "module",
-  "author": "",
+  "author": "tomdilsh",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "npx tsx src/index.ts"
   },
   "license": "ISC",
   "dependencies": {
@@ -13,6 +13,10 @@
     "csv-parse": "^5.5.5",
     "ejs": "^3.1.9",
     "prettier": "^3.2.5",
-    "sass": "^1.72.0"
+    "sass": "^1.72.0",
+    "tsx": "^4.7.1"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5"
   }
 }

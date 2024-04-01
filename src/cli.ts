@@ -1,8 +1,9 @@
 import { existsSync } from "fs";
 import { input, select } from "@inquirer/prompts";
-import { processFolder } from "./parser.js";
+import { processFolder } from "./parser";
+import { COLOR_SCHEME } from "./constants";
 
-export async function processOptions(args) {
+export async function processOptions() {
   const folder = await input({
     message: "Please provide a folder containing backup data:",
   });
@@ -17,11 +18,11 @@ export async function processOptions(args) {
     choices: [
       {
         name: "Dark",
-        value: "dark",
+        value: COLOR_SCHEME.Dark,
       },
       {
         name: "Light",
-        value: "light",
+        value: COLOR_SCHEME.Light,
       },
     ],
   });
