@@ -8,13 +8,13 @@
   <body>
     <div class="chat-wrapper">
       <div class="entry-wrapper new-date fixed">
-        <div class="date-bubble" id="fixed-date">MARCH 13, 2024</div>
+        <div class="date-bubble" id="fixed-date"><%= entries[0].new_date %></div>
       </div>
       <% const entries = Object.values(set.entries) %>
       <% for(let i =0; i <entries.length; i++) { %>
         <% if(entries[i].new_date) { %>
           <div class="entry-wrapper new-date">
-            <div class="date-bubble" data-count="<%-entries[i].new_date_count%>">
+            <div class="date-bubble">
               <%= entries[i].new_date %>
             </div>
           </div>
