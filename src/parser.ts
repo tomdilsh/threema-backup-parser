@@ -17,6 +17,7 @@ import {
   getFileSubtype,
   getFileType,
   getGroupAvatar,
+  getNewDayString,
 } from "./utils";
 import { renderHTML } from "./render";
 import {
@@ -69,8 +70,18 @@ function processFile(inputPath: string): Record<string, ThreadEntry> {
     return obj;
   }, {});
 
+  let last = "";
   for (const key in entries) {
+    if (
+      new Date(entries[key]?.posted_at).getDay() !==
+      new Date(entries[last]?.posted_at).getDay()
+    ) {
+      entries[key].new_date = getNewDayString(
+        new Date(entries[key]?.posted_at)
+      ).toUpperCase();
+    }
     processThreadEntry(entries[key]);
+    last = key;
   }
   return entries;
 }
@@ -104,6 +115,7 @@ function processThreadType(
 }
 
 function processThreadEntry(entry: ThreadEntry) {
+  entry.formatted_date = new Date(entry.posted_at).toLocaleTimeString("en-us");
   switch (entry.type) {
     case THREAD_ENTRY_TYPE.FILE:
       entry.file_info = parseFileInfo(entry.body);

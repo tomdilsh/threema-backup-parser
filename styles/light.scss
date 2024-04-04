@@ -20,12 +20,18 @@ html {
       background-color: #e6f6ea;
     }
   }
+
+  &.new-date {
+    .date-bubble {
+      background-color: #b9b9b9;
+    }
+  }
 }
 
 .message-bubble {
-  color: black;
+  color: #20221f;
 }
 
 .date {
-  color: lightgray;
+  color: #20221f;
 }

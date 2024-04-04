@@ -4,9 +4,11 @@ import { processFolder } from "./parser";
 import { COLOR_SCHEME } from "./constants";
 
 export async function processOptions() {
-  const folder = await input({
-    message: "Please provide a folder containing backup data:",
-  });
+  // const folder = await input({
+  //   message: "Please provide a folder containing backup data:",
+  // });
+
+  const folder = "threema-backup";
 
   if (!existsSync(folder)) {
     console.log(`The provided folder does not exist!`);

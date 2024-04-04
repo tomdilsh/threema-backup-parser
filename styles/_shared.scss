@@ -23,9 +23,10 @@ body {
 
 .chat-wrapper {
   width: 720px;
+  height: fit-content;
+  position: relative;
   background-position: center;
   background-repeat: repeat-y;
-  background-size: contain auto;
   background-attachment: fixed;
 }
 
@@ -92,6 +93,30 @@ body {
       margin-right: 12px;
     }
   }
+
+  &.new-date {
+    justify-content: center;
+    align-items: center;
+    .date-bubble {
+      padding: 12px;
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+    }
+    &.fixed {
+      position: absolute;
+      z-index: 1;
+      height: 56px;
+      .date-bubble {
+        position: fixed;
+        transition: top linear 500ms;
+        top: 0;
+        &.hidden {
+          top: -100px;
+        }
+      }
+    }
+  }
 }
 
 .message-bubble {
@@ -99,7 +124,6 @@ body {
   max-width: 80%;
   display: inline-block;
   word-wrap: break-word;
-  white-space: pre-line;
 }
 
 .text-message {
@@ -109,6 +133,5 @@ body {
 .date {
   position: relative;
   top: 3px;
-  margin-top: 4px;
   font-size: 14px;
 }

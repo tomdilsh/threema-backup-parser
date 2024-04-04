@@ -12,6 +12,13 @@ export const getGroupAvatar = (id: string | number) => `group_avatar_${id}`;
 export const getDistributionAvatar = (id: string | number) =>
   `distribution_list_avatar_${id}`;
 
+export const getNewDayString = (date: Date) =>
+  date.toLocaleDateString("en-us", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
 export const getDisplayName = (contact: ContactMetadata) => {
   return (
     `${contact?.firstname} ${contact?.lastname}`.trim() ||
@@ -19,14 +26,6 @@ export const getDisplayName = (contact: ContactMetadata) => {
     DEFAULT_SENDER
   );
 };
-
-export const getDateString = (date: Date) =>
-  date.toLocaleDateString("en-us", {
-    weekday: "long",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
 
 export const getFileType = (file: string) => {
   if (DISTRIBUTION_MSG_CSV.test(file)) {
