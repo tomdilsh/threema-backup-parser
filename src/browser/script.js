@@ -5,38 +5,45 @@ function debounce(method, delay) {
   }, delay);
 }
 
-function scrollTest() {
-  let elem = null;
-  const fixed = document.getElementById("fixed-date");
-  const bubbles = [
-    ...document.querySelectorAll(".date-bubble:not(#fixed-date)"),
-  ];
-
-  for (const b of bubbles) {
-    const y = b.getBoundingClientRect().y;
-    if (y < 0) {
-      elem = b;
-    }
-    if (y >= 0) {
-      break;
-    }
-  }
-
-  if (elem) {
-    fixed.textContent = elem.textContent;
-  }
-}
-
 function hideFixedDate() {
   const fixed = document.getElementById("fixed-date");
   fixed.classList.add("hidden");
 }
 
+const round10 = (x) => Math.ceil(x / 10) * 10;
+
 window.onload = () => {
+  const heights = new Map();
+  const bubbles = [
+    ...document.querySelectorAll(".date-bubble:not(#fixed-date)"),
+  ];
+  let offset = 0;
+  for (let i = 0; i < bubbles.length; i++) {
+    const y = bubbles[i].getBoundingClientRect().y;
+    if (i === 0) {
+      offset = Math.abs(y);
+    }
+    heights.set(round10(y + offset), bubbles[i].textContent);
+  }
+
+  const body = document.querySelector("body");
+  const fixed = document.querySelector("#fixed-date");
+
+  const updateFixedDate = () => {
+    const scroll = round10(body.scrollTop);
+    for (let i = scroll; i >= 0; i -= 10) {
+      const msg = heights.get(i);
+      if (msg) {
+        fixed.textContent = msg;
+        break;
+      }
+    }
+  };
+  updateFixedDate();
+
   document.addEventListener("scroll", () => {
-    const fixed = document.getElementById("fixed-date");
     fixed.classList.remove("hidden");
-    scrollTest();
     debounce(hideFixedDate, 3000);
+    debounce(updateFixedDate, 50);
   });
 };

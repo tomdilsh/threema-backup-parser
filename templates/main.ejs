@@ -7,10 +7,10 @@
   </head>
   <body>
     <div class="chat-wrapper">
+      <% const entries = Object.values(set.entries) %>
       <div class="entry-wrapper new-date fixed">
         <div class="date-bubble" id="fixed-date"><%= entries[0].new_date %></div>
       </div>
-      <% const entries = Object.values(set.entries) %>
       <% for(let i =0; i <entries.length; i++) { %>
         <% if(entries[i].new_date) { %>
           <div class="entry-wrapper new-date">
