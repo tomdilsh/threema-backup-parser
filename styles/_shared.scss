@@ -7,6 +7,9 @@
   }
 }
 
+$header-height: 100px;
+$date-bubble-margin: 10px;
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -21,7 +24,57 @@ html {
 body {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
   position: relative;
+}
+
+.chat-header {
+  width: 720px;
+  height: $header-height;
+  position: fixed;
+  display: flex;
+  padding: 10px 10px 10px 120px;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 2;
+  .chat-avatar {
+    border-radius: 50%;
+    width: $header-height - 40;
+  }
+  .chat-info {
+    margin-left: 10px;
+    .chat-title {
+      font-size: 36px;
+    }
+    .chat-verification {
+      display: flex;
+      margin: 6px 0;
+      .verification-icon {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: #dfdfdf;
+        margin-right: 3px;
+      }
+      &.fully_verified {
+        .verification-icon {
+          background-color: #3aac5a;
+        }
+      }
+      &.server_verified {
+        div:nth-of-type(1),
+        div:nth-of-type(2) {
+          background-color: #ff9630;
+        }
+      }
+      &.unverified {
+        div:nth-of-type(1) {
+          background-color: #ff463d;
+        }
+      }
+    }
+  }
 }
 
 .chat-wrapper {
@@ -38,6 +91,10 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  &:nth-child(3) {
+    padding-top: $header-height + $date-bubble-margin;
+  }
 
   &.left + &.right {
     .message-bubble {
@@ -94,6 +151,9 @@ body {
       align-self: flex-end;
       text-align: left;
       margin-right: 12px;
+      .date {
+        text-align: right;
+      }
     }
   }
 
@@ -114,9 +174,9 @@ body {
       .date-bubble {
         position: fixed;
         transition: top linear 500ms;
-        top: 0;
+        top: $header-height + $date-bubble-margin;
         &.hidden {
-          top: -100px;
+          top: -($header-height + $date-bubble-margin);
         }
       }
     }
@@ -137,5 +197,6 @@ body {
 .date {
   position: relative;
   top: 3px;
-  font-size: 14px;
+  font-size: 12px;
+  margin: 6px;
 }

@@ -1,10 +1,15 @@
-import { THREAD_ENTRY_TYPE, THREAD_TYPE } from "./constants";
+import {
+  THREAD_ENTRY_TYPE,
+  THREAD_TYPE,
+  VERIFICATION_LEVEL,
+} from "./constants";
 
 export interface ThreadSet {
   entries: Record<string, ThreadEntry>;
   avatar?: string;
   title?: string;
   members?: string[];
+  verification?: VERIFICATION_LEVEL;
   filename: string;
   type: THREAD_TYPE;
   id: number;
@@ -33,6 +38,7 @@ export interface ThreadEntry {
   file_info?: FileInfo;
   location_info: LocationInfo;
   ballot_info: BallotInfo;
+  formatted_date: string;
 }
 
 export interface FileInfo {
@@ -57,7 +63,7 @@ export interface BallotInfo {
 export interface ContactMetadata {
   identity: string;
   publickey: string;
-  verification: string;
+  verification: VERIFICATION_LEVEL;
   acid: string;
   tacid: string;
   firstname: string;

@@ -29,6 +29,12 @@ export enum FILE_SUBTYPE {
   OTHER = "OTHER",
 }
 
+export enum VERIFICATION_LEVEL {
+  FULLY_VERIFIED = "FULLY_VERIFIED",
+  SERVER_VERIFIED = "SERVER_VERIFIED",
+  UNVERIFIED = "UNVERIFIED",
+}
+
 export const CONTACT_MSG_CSV = /(message_)[\d]+(.csv)/;
 export const GROUP_MSG_CSV = /(group_message_)[\d]+(.csv)/;
 export const DISTRIBUTION_MSG_CSV = /(distribution_list_message_)[\d]+(.csv)/;

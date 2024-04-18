@@ -18,12 +18,14 @@ window.onload = () => {
     ...document.querySelectorAll(".date-bubble:not(#fixed-date)"),
   ];
   let offset = 0;
+  let first = 0;
   for (let i = 0; i < bubbles.length; i++) {
     const y = bubbles[i].getBoundingClientRect().y;
     if (i === 0) {
       offset = Math.abs(y);
+      first = Math.max(0, y * 2);
     }
-    heights.set(round10(y + offset), bubbles[i].textContent);
+    heights.set(round10(y + offset - first), bubbles[i].textContent);
   }
 
   const body = document.querySelector("body");

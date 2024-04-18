@@ -11,7 +11,7 @@ export function renderHTML(
   colorScheme: COLOR_SCHEME
 ) {
   const style = compile(`styles/${colorScheme}.scss`).css;
-  const script = readFileSync("src/browser/script.js").toString();
+  const script = readFileSync("browser/script.js").toString();
   const targetFolder = `${inputFolder}/${OUTPUT_FOLDER}`;
 
   if (!existsSync(targetFolder)) {

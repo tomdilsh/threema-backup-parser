@@ -96,6 +96,7 @@ function processThreadType(
     case THREAD_TYPE.CONTACT:
       set.avatar = getContactAvatar(set.id);
       set.title = getDisplayName(contacts[set.id]);
+      set.verification = contacts[set.id].verification;
       break;
     case THREAD_TYPE.GROUP:
       set.avatar = getGroupAvatar(set.id);
@@ -115,7 +116,8 @@ function processThreadType(
 }
 
 function processThreadEntry(entry: ThreadEntry) {
-  entry.formatted_date = new Date(entry.posted_at).toLocaleTimeString("en-us");
+  const jsDate = new Date(entry.posted_at);
+  entry.formatted_date = `${getNewDayString(jsDate)} ${jsDate.toLocaleTimeString("en-us")}`;
   switch (entry.type) {
     case THREAD_ENTRY_TYPE.FILE:
       entry.file_info = parseFileInfo(entry.body);
