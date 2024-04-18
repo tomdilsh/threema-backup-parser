@@ -45,7 +45,7 @@ body {
   .chat-info {
     margin-left: 10px;
     .chat-title {
-      font-size: 36px;
+      font-size: 32px;
     }
     .chat-verification {
       display: flex;
@@ -74,6 +74,10 @@ body {
         }
       }
     }
+    .chat-members {
+      font-size: 14px;
+      margin: 6px 0;
+    }
   }
 }
 
@@ -84,6 +88,7 @@ body {
   background-position: center;
   background-repeat: repeat-y;
   background-attachment: fixed;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.094);
 }
 
 .entry-wrapper {
@@ -161,10 +166,11 @@ body {
     justify-content: center;
     align-items: center;
     .date-bubble {
-      padding: 12px 16px;
+      font-size: 12px;
+      padding: 8px 12px;
       border-radius: 50px;
       color: white;
-      font-weight: 600;
+      font-weight: 400;
       box-shadow: 0 0 12px 0 #00000020;
     }
     &.fixed {
@@ -173,7 +179,7 @@ body {
       height: 56px;
       .date-bubble {
         position: fixed;
-        transition: top linear 500ms;
+        transition: top linear 750ms;
         top: $header-height + $date-bubble-margin;
         &.hidden {
           top: -($header-height + $date-bubble-margin);

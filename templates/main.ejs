@@ -1,3 +1,4 @@
+<!-- <!DOCTYPE html> -->
 <html>
   <head>
     <title>Threema Chat Output - <%= set.filename %></title>
@@ -7,16 +8,7 @@
   </head>
   <body>
     <div class="chat-wrapper">
-      <div class="chat-header">
-        <img class="chat-avatar" src="../<%=set.avatar%>"/>
-        <div class="chat-info">
-          <div class="chat-title"><%=set.title%></div>
-            <% if (set.type === 'CONTACT') { %>
-              <%- include('verification', { verification: set.verification }) %>
-            <% } else { %>
-            <% } %>
-        </div>
-      </div>
+      <%- include('header', { set }) %>
       <% const entries = Object.values(set.entries) %>
       <div class="entry-wrapper new-date fixed">
         <div class="date-bubble" id="fixed-date"><%= entries[0].new_date %></div>
@@ -31,17 +23,7 @@
         <% } %>
         <div class="entry-wrapper <%= entries[i].isoutbox ? 'right' : 'left' %>">
           <div class="message-bubble">
-            <% if (entries[i].type === 'TEXT') { %>
-              <%- include('text', { message: entries[i] }) %>
-            <% } else if (entries[i].type === 'FILE') { %>
-              <%- include('file', { message: entries[i] }) %>
-            <% } else if (entries[i].type === 'BALLOT') { %>
-              <%- include('ballot', { message: entries[i] }) %>
-            <% } else if (entries[i].type === 'LOCATION') { %>
-              <%- include('location', { message: entries[i] }) %>
-            <% } else { %>
-                <div>Other</div>
-            <% } %>
+            <%- include(entries[i].type.toLowerCase(), { message: entries[i] }) %>
             <div class="date"><%- entries[i].formatted_date %></div>
           </div>
         </div>
