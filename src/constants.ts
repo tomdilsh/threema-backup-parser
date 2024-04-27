@@ -19,6 +19,15 @@ export enum THREAD_ENTRY_TYPE {
   GROUP_CALL_STATUS = "GROUP_CALL_STATUS",
 }
 
+export enum THREAD_ENTRY_ACK {
+  READ = "READ",
+  SENT = "SENT",
+  DELIVERED = "DELIVERED",
+  USERACK = "USERACK", // liked
+  USERDEC = "USERDEC", // disliked
+  CONSUMED = "CONSUMED", // ??
+}
+
 export enum FILE_SUBTYPE {
   IMAGE = "IMAGE",
   AUDIO = "AUDIO",

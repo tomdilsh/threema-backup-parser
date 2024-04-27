@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html> -->
+<!DOCTYPE html>
 <html>
   <head>
     <title>Threema Chat Output - <%= set.filename %></title>
@@ -24,7 +24,7 @@
         <div class="entry-wrapper <%= entries[i].isoutbox ? 'right' : 'left' %>">
           <div class="message-bubble">
             <%- include(entries[i].type.toLowerCase(), { message: entries[i] }) %>
-            <div class="date"><%- entries[i].formatted_date %></div>
+            <%- include("date_info", { message: entries[i] }) %>
           </div>
         </div>
       <% } %>

@@ -57,12 +57,12 @@ body {
         background-color: #dfdfdf;
         margin-right: 3px;
       }
-      &.fully_verified {
+      &.fully-verified {
         .verification-icon {
           background-color: #3aac5a;
         }
       }
-      &.server_verified {
+      &.server-verified {
         div:nth-of-type(1),
         div:nth-of-type(2) {
           background-color: #ff9630;
@@ -205,4 +205,18 @@ body {
   top: 3px;
   font-size: 12px;
   margin: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  .icon {
+    width: 12px;
+  }
+  .thumbs-down {
+    filter: invert(70%) sepia(34%) saturate(2260%) hue-rotate(335deg)
+      brightness(100%) contrast(102%);
+  }
+  .thumbs-up {
+    filter: invert(58%) sepia(67%) saturate(468%) hue-rotate(84deg)
+      brightness(86%) contrast(80%);
+  }
 }

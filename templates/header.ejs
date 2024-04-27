@@ -3,7 +3,7 @@
   <div class="chat-info">
     <div class="chat-title"><%=set.title%></div>
       <% if (set.type === 'CONTACT') { %>
-        <div class="chat-verification <%=set.verification.toLowerCase()%>">
+        <div class="chat-verification <%=set.verification.toLowerCase().replace("_", "-") %>">
           <div class="verification-icon"></div>
           <div class="verification-icon"></div>
           <div class="verification-icon"></div>

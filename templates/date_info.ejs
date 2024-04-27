@@ -1,0 +1,16 @@
+<div class="date">
+  <%- message.formatted_date %>
+  <% if (message.messagestae) { %>
+    <% if (message.messagestae === "SENT") { %>
+      <img class="regular icon" src="../../assets/ic_mail_filled.svg" />
+    <% } else if (message.messagestae === "READ") { %>
+      <img class="regular icon" src="../../assets/ic_visibility_filled.svg" />
+    <% } else if (message.messagestae === "DELIVERED") { %>
+      <img class="regular icon" src="../../assets/ic_inbox_filled.svg" />
+    <% } else if (message.messagestae === "USERACK") { %>
+      <img class="thumbs-up icon" src="../../assets/ic_thumb_up_filled.svg" />
+    <% } else if (message.messagestae === "USERDEC") { %>
+      <img class="thumbs-down icon" src="../../assets/ic_thumb_down_filled.svg" />
+    <% } %>
+  <% } %>
+</div>

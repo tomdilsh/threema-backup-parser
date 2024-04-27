@@ -40,4 +40,8 @@ html {
 
 .date {
   color: #e1e2dc;
+  .regular {
+    filter: invert(98%) sepia(12%) saturate(108%) hue-rotate(12deg)
+      brightness(95%) contrast(87%);
+  }
 }
